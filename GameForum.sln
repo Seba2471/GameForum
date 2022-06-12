@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{D2369F5C-5D1B-4FC6-B872-ED7C7D8001C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{ADDF5200-5830-40B6-A343-539813CF5097}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastrucute", "Infrastrucute", "{AD4E1B1D-FA67-4B79-AFBB-5340F4A9E07F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameForum.Domain", "GameForum.Domain\GameForum.Domain.csproj", "{4FFD2992-C1AF-436F-A875-1494C9ED9D8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameForum.Application", "GameForum.Application\GameForum.Application.csproj", "{8C6D3D2D-7001-4118-89BF-68731F305ACC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4FFD2992-C1AF-436F-A875-1494C9ED9D8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FFD2992-C1AF-436F-A875-1494C9ED9D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FFD2992-C1AF-436F-A875-1494C9ED9D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FFD2992-C1AF-436F-A875-1494C9ED9D8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C6D3D2D-7001-4118-89BF-68731F305ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C6D3D2D-7001-4118-89BF-68731F305ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C6D3D2D-7001-4118-89BF-68731F305ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C6D3D2D-7001-4118-89BF-68731F305ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4FFD2992-C1AF-436F-A875-1494C9ED9D8A} = {ADDF5200-5830-40B6-A343-539813CF5097}
+		{8C6D3D2D-7001-4118-89BF-68731F305ACC} = {ADDF5200-5830-40B6-A343-539813CF5097}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7296B4C-9D3E-4D27-9388-A21AFA256108}
+	EndGlobalSection
+EndGlobal
