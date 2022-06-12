@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using GameForum.Application.Functions.Posts;
+using GameForum.Application.Functions.Posts.Queries.GetPostList;
 using GameForum.Domain.Entities;
 
 namespace GameForum.Application.Mapper

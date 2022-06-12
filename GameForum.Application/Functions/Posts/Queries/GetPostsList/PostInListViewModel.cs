@@ -1,6 +1,6 @@
 ﻿using GameForum.Domain.Entities;
 
-namespace GameForum.Application.Functions.Posts
+namespace GameForum.Application.Functions.Posts.Queries.GetPostList
 {
     public class PostInListViewModel
     {

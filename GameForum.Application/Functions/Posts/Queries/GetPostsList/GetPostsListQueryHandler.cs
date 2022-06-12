@@ -3,7 +3,7 @@ using GameForum.Application.Contracts.Persistence;
 using GameForum.Domain.Entities;
 using MediatR;
 
-namespace GameForum.Application.Functions.Posts
+namespace GameForum.Application.Functions.Posts.Queries.GetPostList
 {
     public class GetPostsListQueryHandler : IRequestHandler<GetPostsListQuery, List<PostInListViewModel>>
     {
