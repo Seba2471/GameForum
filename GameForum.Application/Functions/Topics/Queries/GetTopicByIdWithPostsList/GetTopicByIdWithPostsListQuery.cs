@@ -3,8 +3,8 @@ using MediatR;
 
 namespace GameForum.Application.Functions.Topics.Queries.GetTopicsWithPostsListQuery
 {
-    public class GetTopicWithPostsListQuery : IRequest<List<TopicWithPostsListViewModel>>
+    public class GetTopicByIdWithPostsListQuery : IRequest<List<TopicWithByIdPostsListViewModel>>
     {
-
+        public int Id { get; set; }
     }
 }

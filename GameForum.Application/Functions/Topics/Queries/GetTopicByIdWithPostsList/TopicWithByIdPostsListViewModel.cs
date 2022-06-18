@@ -2,7 +2,7 @@
 
 namespace GameForum.Application.Functions.Topics.Queries.GetTopicWithPostsList
 {
-    public class TopicWithPostsListViewModel
+    public class TopicWithByIdPostsListViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
