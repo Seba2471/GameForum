@@ -15,6 +15,7 @@ namespace GameForum.Application.Functions.Posts.Queries.GetPostList
             _mapper = mapper;
             _postRepository = postRepository;
         }
+
         public async Task<List<PostInListViewModel>> Handle(GetPostsListQuery request, CancellationToken cancellationToken)
         {
             var all = await _postRepository.GetAllAsync();

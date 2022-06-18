@@ -9,9 +9,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{ADDF5200-5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastrucute", "Infrastrucute", "{AD4E1B1D-FA67-4B79-AFBB-5340F4A9E07F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameForum.Domain", "GameForum.Domain\GameForum.Domain.csproj", "{4FFD2992-C1AF-436F-A875-1494C9ED9D8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameForum.Domain", "GameForum.Domain\GameForum.Domain.csproj", "{4FFD2992-C1AF-436F-A875-1494C9ED9D8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameForum.Application", "GameForum.Application\GameForum.Application.csproj", "{8C6D3D2D-7001-4118-89BF-68731F305ACC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameForum.Application", "GameForum.Application\GameForum.Application.csproj", "{8C6D3D2D-7001-4118-89BF-68731F305ACC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1605EE49-ADF4-4A17-988D-DB32A22455B3}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
