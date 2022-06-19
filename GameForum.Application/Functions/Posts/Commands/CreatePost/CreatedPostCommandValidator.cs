@@ -8,9 +8,12 @@ namespace GameForum.Application.Functions.Posts.Commands.CreatePost
         public CreatedPostCommandValidator()
         {
             RuleFor(p => p.Content)
-                .NotEmpty()
+                .NotNull()
                 .WithMessage("{PropertyName} is required")
-                .NotNull();
+                .MinimumLength(3)
+                .WithMessage("{PropertyName} is too short")
+                .MaximumLength(500)
+                .WithMessage("{PropertyName} is too long");
         }
     }
 }
