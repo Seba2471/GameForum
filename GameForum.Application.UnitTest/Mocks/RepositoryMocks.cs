@@ -22,6 +22,15 @@ namespace GameForum.Application.UnitTest.Mocks
                     return topic;
                 });
 
+
+            mockTopicRepository.Setup(repo => repo.AddAsync(It.IsAny<Topic>())).ReturnsAsync(
+                (Topic topic) =>
+                {
+                    topics.Add(topic);
+                    return topic;
+                });
+
+
             return mockTopicRepository;
         }
 
