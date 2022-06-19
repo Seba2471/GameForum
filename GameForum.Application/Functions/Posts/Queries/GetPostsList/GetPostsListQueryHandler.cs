@@ -19,7 +19,7 @@ namespace GameForum.Application.Functions.Posts.Queries.GetPostList
         public async Task<List<PostInListViewModel>> Handle(GetPostsListQuery request, CancellationToken cancellationToken)
         {
             var all = await _postRepository.GetAllAsync();
-            var allordered = all.OrderBy(x => x.Created);
+            var allordered = all.OrderBy(x => x.CreatedDate);
 
             return _mapper.Map<List<PostInListViewModel>>(allordered);
         }

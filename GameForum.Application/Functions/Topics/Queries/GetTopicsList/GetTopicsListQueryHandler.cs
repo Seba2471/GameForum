@@ -20,7 +20,7 @@ namespace GameForum.Application.Functions.Topics.Queries.GetTopicsList
         {
             var all = await _topicRepository.GetAllAsync();
 
-            var allordered = all.OrderBy(x => x.Created);
+            var allordered = all.OrderBy(x => x.CreatedDate);
 
             return _mapper.Map<List<TopicInListViewModel>>(all);
         }
