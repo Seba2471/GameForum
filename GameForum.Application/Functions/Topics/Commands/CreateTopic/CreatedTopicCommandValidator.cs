@@ -10,7 +10,7 @@ namespace GameForum.Application.Functions.Topics.Commands.CreateTopic
             RuleFor(t => t.Title)
                 .MinimumLength(3)
                 .WithMessage("{PropertyName} is too short")
-                .MaximumLength(30)
+                .MaximumLength(80)
                 .WithMessage("{PropertyName} is too long")
                 .NotNull()
                 .WithMessage("{PropertyName} is required");

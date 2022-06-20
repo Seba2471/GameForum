@@ -85,7 +85,7 @@ namespace GameForum.Application.UnitTest.Topics.Commands
             var command = new CreatedTopicCommand()
             {
 
-                Title = new string('*', 31),
+                Title = new string('*', 81),
                 Content = new string('*', 30),
                 DepartmentId = 1
             };
