@@ -58,19 +58,18 @@ namespace GameForum.Application.UnitTest.Mocks
             return topics;
         }
 
-        private static Topic GetTopicByIdWithPostsList(int i)
+        private static Topic GetTopicByIdWithPostsList(int id)
         {
             var posts = GetPosts();
 
-            Topic t1 = new Topic()
-            {
-                TopicId = i,
-                Title = "Pomoc z ekwipunkiem",
-                Content = "Proszę o pomoc z ekwipunkiem na 35 lvl",
-                Posts = posts.Where(p => p.TopicId == 1).ToList()
-            };
 
-            return t1;
+            var topics = GetTopics();
+
+            var topic = topics.FirstOrDefault(t => t.TopicId == id);
+
+            topic.Posts = posts.Where(p => p.TopicId == id).ToList();
+
+            return topic;
         }
 
 
