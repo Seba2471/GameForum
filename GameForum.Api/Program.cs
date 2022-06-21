@@ -1,5 +1,6 @@
 using GameForum.Application;
 using GameForum.Persistence.EF;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ var config = builder.Configuration;
 builder.Services.AddGameForumApplication();
 builder.Services.AddGameForumPersistenceEFServices(config);
 builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(option => option.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
