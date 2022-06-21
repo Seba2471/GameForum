@@ -41,7 +41,6 @@ namespace GameForum.Application.UnitTest.Mocks
                 TopicId = 1,
                 Title = "Pomoc z ekwipunkiem",
                 Content = "Proszę o pomoc z ekwipunkiem na 35 lvl",
-                DepartmentId = 1
             };
 
             Topic t2 = new Topic()
@@ -49,7 +48,6 @@ namespace GameForum.Application.UnitTest.Mocks
                 TopicId = 2,
                 Title = "Pomoc z expowiskiem",
                 Content = "Gdzie moge wbijać poziom na 40 lvl ?",
-                DepartmentId = 2,
             };
 
             List<Topic> topics = new List<Topic>();
@@ -69,7 +67,6 @@ namespace GameForum.Application.UnitTest.Mocks
                 TopicId = i,
                 Title = "Pomoc z ekwipunkiem",
                 Content = "Proszę o pomoc z ekwipunkiem na 35 lvl",
-                DepartmentId = 1,
                 Posts = posts.Where(p => p.TopicId == 1).ToList()
             };
 

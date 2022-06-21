@@ -25,9 +25,10 @@ namespace GameForum.Persistence.EF
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedDate = DateTime.Now;
+                        entry.Entity.LastModifiedDate = DateTime.Now;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.CreatedDate = DateTime.Now;
+                        entry.Entity.LastModifiedDate = DateTime.Now;
                         break;
                 }
             }

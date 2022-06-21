@@ -37,7 +37,6 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
                 Title = new string('*', 10),
                 Content = new string('*', 30),
-                DepartmentId = 1
             };
 
             var response = await handler.Handle(command, CancellationToken.None);
@@ -62,7 +61,6 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
                 Title = new string('*', 2),
                 Content = new string('*', 30),
-                DepartmentId = 1
             };
 
             var response = await handler.Handle(command, CancellationToken.None);
@@ -87,7 +85,6 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
                 Title = new string('*', 81),
                 Content = new string('*', 30),
-                DepartmentId = 1
             };
 
             var response = await handler.Handle(command, CancellationToken.None);
@@ -112,7 +109,6 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
                 Title = new string('*', 25),
                 Content = new string('*', 2),
-                DepartmentId = 1
             };
 
             var response = await handler.Handle(command, CancellationToken.None);
@@ -137,7 +133,6 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
                 Title = new string('*', 25),
                 Content = new string('*', 501),
-                DepartmentId = 1
             };
 
             var response = await handler.Handle(command, CancellationToken.None);
