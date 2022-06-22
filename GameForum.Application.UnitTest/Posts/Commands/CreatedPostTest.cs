@@ -2,8 +2,10 @@
 using GameForum.Application.Contracts.Persistence;
 using GameForum.Application.Functions.Posts.Commands.CreatePost;
 using GameForum.Application.Mapper;
+using GameForum.Application.Responses;
 using GameForum.Application.UnitTest.Mocks;
 using Moq;
+using OneOf.Types;
 using Shouldly;
 
 namespace GameForum.Application.UnitTest.Posts.Commands
@@ -45,10 +47,8 @@ namespace GameForum.Application.UnitTest.Posts.Commands
 
             var allPosts = await _mockPostRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(true);
-            response.ValidationErrors.Count.ShouldBe(0);
+            response.Match(success => success, null).ShouldBeOfType<Success<CreatedPostCommandResponse>>();
             allPosts.Count.ShouldBe(allPostsBeforeCount + 1);
-            response.PostId.ShouldNotBeNull();
         }
 
         [Fact]
@@ -69,10 +69,9 @@ namespace GameForum.Application.UnitTest.Posts.Commands
 
             var allPosts = await _mockPostRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(false);
-            response.ValidationErrors.Count.ShouldBe(1);
+            response.Match(null, validateResponse => validateResponse).ShouldBeOfType<NotValidateResponse>();
+            response.Match(null, notValidateResponse => notValidateResponse.ValidationErrors.Count()).ShouldBe(1);
             allPosts.Count.ShouldBe(allPostsBeforeCount);
-            response.PostId.ShouldBeNull();
         }
 
         [Fact]
@@ -93,10 +92,9 @@ namespace GameForum.Application.UnitTest.Posts.Commands
 
             var allPosts = await _mockPostRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(false);
-            response.ValidationErrors.Count.ShouldBe(1);
+            response.Match(null, validateResponse => validateResponse).ShouldBeOfType<NotValidateResponse>();
+            response.Match(null, notValidateResponse => notValidateResponse.ValidationErrors.Count()).ShouldBe(1);
             allPosts.Count.ShouldBe(allPostsBeforeCount);
-            response.PostId.ShouldBeNull();
         }
     }
 }

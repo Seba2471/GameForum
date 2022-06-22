@@ -2,8 +2,10 @@
 using GameForum.Application.Contracts.Persistence;
 using GameForum.Application.Functions.Topics.Commands.CreateTopic;
 using GameForum.Application.Mapper;
+using GameForum.Application.Responses;
 using GameForum.Application.UnitTest.Mocks;
 using Moq;
+using OneOf.Types;
 using Shouldly;
 
 namespace GameForum.Application.UnitTest.Topics.Commands
@@ -30,7 +32,7 @@ namespace GameForum.Application.UnitTest.Topics.Commands
         {
             var handler = new CreatedTopicCommandHandler(_mockTopicRepository.Object, _mapper);
 
-            var allPostsBeforeCount = (await _mockTopicRepository.Object.GetAllAsync()).Count();
+            var allTopicBeforeCount = (await _mockTopicRepository.Object.GetAllAsync()).Count();
 
             var command = new CreatedTopicCommand()
             {
@@ -41,12 +43,10 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
             var response = await handler.Handle(command, CancellationToken.None);
 
-            var allPosts = await _mockTopicRepository.Object.GetAllAsync();
+            var allTopics = await _mockTopicRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(true);
-            response.ValidationErrors.Count.ShouldBe(0);
-            allPosts.Count.ShouldBe(allPostsBeforeCount + 1);
-            response.TopicId.ShouldNotBeNull();
+            response.Match(success => success, null).ShouldBeOfType<Success<CreatedTopicCommandResponse>>();
+            allTopics.Count.ShouldBe(allTopicBeforeCount + 1);
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace GameForum.Application.UnitTest.Topics.Commands
         {
             var handler = new CreatedTopicCommandHandler(_mockTopicRepository.Object, _mapper);
 
-            var allPostsBeforeCount = (await _mockTopicRepository.Object.GetAllAsync()).Count();
+            var allTopicBeforeCount = (await _mockTopicRepository.Object.GetAllAsync()).Count();
 
             var command = new CreatedTopicCommand()
             {
@@ -65,12 +65,11 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
             var response = await handler.Handle(command, CancellationToken.None);
 
-            var allPosts = await _mockTopicRepository.Object.GetAllAsync();
+            var allTopics = await _mockTopicRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(false);
-            response.ValidationErrors.Count.ShouldBe(1);
-            allPosts.Count.ShouldBe(allPostsBeforeCount);
-            response.TopicId.ShouldBeNull();
+            response.Match(null, validateResponse => validateResponse).ShouldBeOfType<NotValidateResponse>();
+            response.Match(null, notValidateResponse => notValidateResponse.ValidationErrors.Count()).ShouldBe(1);
+            allTopics.Count.ShouldBe(allTopicBeforeCount);
         }
 
         [Fact]
@@ -78,7 +77,7 @@ namespace GameForum.Application.UnitTest.Topics.Commands
         {
             var handler = new CreatedTopicCommandHandler(_mockTopicRepository.Object, _mapper);
 
-            var allPostsBeforeCount = (await _mockTopicRepository.Object.GetAllAsync()).Count();
+            var allTopicBeforeCount = (await _mockTopicRepository.Object.GetAllAsync()).Count();
 
             var command = new CreatedTopicCommand()
             {
@@ -89,12 +88,12 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
             var response = await handler.Handle(command, CancellationToken.None);
 
-            var allPosts = await _mockTopicRepository.Object.GetAllAsync();
+            var allTopics = await _mockTopicRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(false);
-            response.ValidationErrors.Count.ShouldBe(1);
-            allPosts.Count.ShouldBe(allPostsBeforeCount);
-            response.TopicId.ShouldBeNull();
+
+            response.Match(null, validateResponse => validateResponse).ShouldBeOfType<NotValidateResponse>();
+            response.Match(null, notValidateResponse => notValidateResponse.ValidationErrors.Count()).ShouldBe(1);
+            allTopics.Count.ShouldBe(allTopicBeforeCount);
         }
 
         [Fact]
@@ -102,7 +101,7 @@ namespace GameForum.Application.UnitTest.Topics.Commands
         {
             var handler = new CreatedTopicCommandHandler(_mockTopicRepository.Object, _mapper);
 
-            var allPostsBeforeCount = (await _mockTopicRepository.Object.GetAllAsync()).Count();
+            var allTopicBeforeCount = (await _mockTopicRepository.Object.GetAllAsync()).Count();
 
             var command = new CreatedTopicCommand()
             {
@@ -113,12 +112,12 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
             var response = await handler.Handle(command, CancellationToken.None);
 
-            var allPosts = await _mockTopicRepository.Object.GetAllAsync();
+            var allTopics = await _mockTopicRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(false);
-            response.ValidationErrors.Count.ShouldBe(1);
-            allPosts.Count.ShouldBe(allPostsBeforeCount);
-            response.TopicId.ShouldBeNull();
+
+            response.Match(null, validateResponse => validateResponse).ShouldBeOfType<NotValidateResponse>();
+            response.Match(null, notValidateResponse => notValidateResponse.ValidationErrors.Count()).ShouldBe(1);
+            allTopics.Count.ShouldBe(allTopicBeforeCount);
         }
 
         [Fact]
@@ -126,7 +125,7 @@ namespace GameForum.Application.UnitTest.Topics.Commands
         {
             var handler = new CreatedTopicCommandHandler(_mockTopicRepository.Object, _mapper);
 
-            var allPostsBeforeCount = (await _mockTopicRepository.Object.GetAllAsync()).Count();
+            var allTopicBeforeCount = (await _mockTopicRepository.Object.GetAllAsync()).Count();
 
             var command = new CreatedTopicCommand()
             {
@@ -137,12 +136,12 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
             var response = await handler.Handle(command, CancellationToken.None);
 
-            var allPosts = await _mockTopicRepository.Object.GetAllAsync();
+            var allTopics = await _mockTopicRepository.Object.GetAllAsync();
 
-            response.Success.ShouldBe(false);
-            response.ValidationErrors.Count.ShouldBe(1);
-            allPosts.Count.ShouldBe(allPostsBeforeCount);
-            response.TopicId.ShouldBeNull();
+
+            response.Match(null, validateResponse => validateResponse).ShouldBeOfType<NotValidateResponse>();
+            response.Match(null, notValidateResponse => notValidateResponse.ValidationErrors.Count()).ShouldBe(1);
+            allTopics.Count.ShouldBe(allTopicBeforeCount);
         }
 
     }
