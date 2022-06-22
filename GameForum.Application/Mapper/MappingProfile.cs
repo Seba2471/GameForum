@@ -26,6 +26,12 @@ namespace GameForum.Application.Mapper
 
             CreateMap<Topic, TopicWithByIdPostsListViewModel>()
                 .ReverseMap();
+
+            CreateMap<CreatedTopicCommandResponse, Topic>()
+                .ReverseMap();
+
+            CreateMap<CreatedPostCommandResponse, Post>()
+                .ReverseMap();
         }
     }
 }

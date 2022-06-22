@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameForum.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route($"api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
     {
@@ -16,11 +16,13 @@ namespace GameForum.Api.Controllers
         }
 
         [HttpPost(Name = "AddPost")]
-        public async Task<ActionResult<int>> Create([FromBody] CreatedPostCommand createdPostCommand)
+        public async Task<IActionResult> Create([FromBody] CreatedPostCommand createdPostCommand)
         {
             var result = await _mediator.Send(createdPostCommand);
 
-            return Ok(result);
+            return result.Match<IActionResult>(
+                success => Created($"api/subject/{success.Value.TopicId}/post/{success.Value.PostId}", success.Value),
+                notValidation => BadRequest(notValidation.ValidationErrors));
         }
     }
 }

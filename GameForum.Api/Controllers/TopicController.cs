@@ -16,12 +16,14 @@ namespace GameForum.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("AddTopic")]
-        public async Task<ActionResult<int>> Create([FromBody] CreatedTopicCommand createdTopicCommand)
+        [HttpPost(Name = "AddTopic")]
+        public async Task<IActionResult> Create([FromBody] CreatedTopicCommand createdTopicCommand)
         {
             var result = await _mediator.Send(createdTopicCommand);
 
-            return Ok(result);
+            return result.Match<IActionResult>(
+                success => Created($"api/topic/{success.Value.TopicId}", success.Value),
+                notValidation => BadRequest(notValidation.ValidationErrors));
         }
 
         [HttpGet("{id}", Name = "GetTopicWithPostList")]

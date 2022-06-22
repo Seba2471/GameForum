@@ -1,10 +1,13 @@
-﻿using MediatR;
+﻿using GameForum.Application.Responses;
+using MediatR;
+using OneOf;
+using OneOf.Types;
 
 namespace GameForum.Application.Functions.Topics.Commands.CreateTopic
 {
-    public class CreatedTopicCommand : IRequest<CreatedTopicCommandResponse>
+    using HandlerResponse = OneOf<Success<CreatedTopicCommandResponse>, NotValidateResponse>;
+    public class CreatedTopicCommand : IRequest<HandlerResponse>
     {
-        public int TopicId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
     }

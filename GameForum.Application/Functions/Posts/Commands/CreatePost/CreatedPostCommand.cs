@@ -1,12 +1,15 @@
-﻿using MediatR;
+﻿using GameForum.Application.Responses;
+using MediatR;
+using OneOf;
+using OneOf.Types;
+
 
 namespace GameForum.Application.Functions.Posts.Commands.CreatePost
 {
-    public class CreatedPostCommand : IRequest<CreatedPostCommandResponse>
+    using HandlerResponse = OneOf<Success<CreatedPostCommandResponse>, NotValidateResponse>;
+    public class CreatedPostCommand : IRequest<HandlerResponse>
     {
-        public int PostId { get; set; }
         public string Content { get; set; }
-        public int Rate { get; set; } = 0;
         public int TopicId { get; set; }
     }
 }
