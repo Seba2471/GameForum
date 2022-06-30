@@ -94,14 +94,12 @@ namespace GameForum.Application.UnitTest.Mocks
                     return post;
                 });
 
-            mockPostRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Post>())).ReturnsAsync(
+            mockPostRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Post>())).Callback(
                 (Post post) =>
                 {
                     var postToUpdate = posts.First(p => p.PostId == post.PostId);
 
                     postToUpdate.Content = post.Content;
-
-                    return postToUpdate;
                 });
 
             mockPostRepository.Setup(repo => repo.IsPostExists(It.IsAny<int>())).ReturnsAsync(
