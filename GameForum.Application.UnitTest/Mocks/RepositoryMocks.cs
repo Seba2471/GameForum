@@ -22,7 +22,6 @@ namespace GameForum.Application.UnitTest.Mocks
                     return topic;
                 });
 
-
             mockTopicRepository.Setup(repo => repo.AddAsync(It.IsAny<Topic>())).ReturnsAsync(
                 (Topic topic) =>
                 {
@@ -87,6 +86,30 @@ namespace GameForum.Application.UnitTest.Mocks
                     posts.Add(post);
                     return post;
                 });
+
+            mockPostRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(
+                (int id) =>
+                {
+                    var post = posts.Find(p => p.PostId == id);
+                    return post;
+                });
+
+            mockPostRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Post>())).ReturnsAsync(
+                (Post post) =>
+                {
+                    var postToUpdate = posts.First(p => p.PostId == post.PostId);
+
+                    postToUpdate.Content = post.Content;
+
+                    return postToUpdate;
+                });
+
+            mockPostRepository.Setup(repo => repo.IsPostExists(It.IsAny<int>())).ReturnsAsync(
+                (int id) =>
+                {
+                    return posts.Any(p => p.PostId == id);
+                });
+
 
             return mockPostRepository;
         }

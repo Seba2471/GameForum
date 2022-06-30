@@ -6,7 +6,10 @@ namespace GameForum.Persistence.EF.Repositories
     public class PostRepository : BaseRepository<Post>, IPostRepository
     {
         public PostRepository(GameForumContext dbContext) : base(dbContext)
-        { }
-
+        {
+        public int PostId { get; set; }
+        public string Content { get; set; }
     }
+
+}
 }
