@@ -1,4 +1,5 @@
 ﻿using GameForum.Application.Functions.Posts.Commands.CreatePost;
+using GameForum.Application.Functions.Posts.Commands.UpdatePost;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,16 @@ namespace GameForum.Api.Controllers
 
             return result.Match<IActionResult>(
                 success => Created($"api/subject/{success.Value.TopicId}/post/{success.Value.PostId}", success.Value),
-                notValidation => BadRequest(notValidation.ValidationErrors));
+                notValidate => BadRequest(notValidate.ValidationErrors));
+        }
+
+        [HttpPatch(Name = "UpdatePostContent")]
+        public async Task<IActionResult> UpdateContent([FromBody] UpdatePostContentCommand updatePostContentCommand)
+        {
+            var result = await _mediator.Send(updatePostContentCommand);
+
+            return result.Match<IActionResult>(success => NoContent(), notValidate => BadRequest(notValidate.ValidationErrors),
+                notFound => BadRequest());
         }
     }
 }
