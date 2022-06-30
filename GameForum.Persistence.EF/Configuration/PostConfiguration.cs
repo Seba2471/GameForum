@@ -11,6 +11,9 @@ namespace GameForum.Persistence.EF.Configuration
             builder.Property(e => e.Content)
                 .IsRequired()
                 .HasMaxLength(500);
+
+            builder.Property(e => e.PostId)
+                .IsRequired();
         }
     }
 }
