@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using GameForum.Application.Functions.Posts.Commands.CreatePost;
-using GameForum.Application.Functions.Posts.Queries.GetPostList;
 using GameForum.Application.Functions.Topics.Commands.CreateTopic;
 using GameForum.Application.Functions.Topics.Queries.GetTopicsList;
 using GameForum.Application.Functions.Topics.Queries.GetTopicWithPostsList;
@@ -12,9 +11,6 @@ namespace GameForum.Application.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<Post, PostInListViewModel>()
-                .ReverseMap();
-
             CreateMap<Topic, TopicInListViewModel>()
                 .ReverseMap();
 

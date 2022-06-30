@@ -20,4 +20,8 @@
 		<ProjectReference Include="..\GameForum.Domain\GameForum.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Functions\Posts\Queries\" />
+	</ItemGroup>
+
 </Project>
