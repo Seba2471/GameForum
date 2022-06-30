@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GameForum.Application.Functions.Posts.Commands.CreatePost;
+using GameForum.Application.Functions.Posts.Commands.UpdatePost;
 using GameForum.Application.Functions.Topics.Commands.CreateTopic;
 using GameForum.Application.Functions.Topics.Queries.GetTopicsList;
 using GameForum.Application.Functions.Topics.Queries.GetTopicWithPostsList;
@@ -27,6 +28,9 @@ namespace GameForum.Application.Mapper
                 .ReverseMap();
 
             CreateMap<CreatedPostCommandResponse, Post>()
+                .ReverseMap();
+
+            CreateMap<Post, UpdatePostContentCommand>()
                 .ReverseMap();
         }
     }
