@@ -30,7 +30,7 @@ namespace GameForum.Application.UnitTest.Posts.Commands
         }
 
         [Fact]
-        public async Task Handle_ValidPost_AddedToPostRepo()
+        public async Task Handler_ValidPost_AddedToPostRepo()
         {
             var handler = new CreatedPostCommandHandler(_mockPostRepository.Object, _mapper);
 
