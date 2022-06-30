@@ -10,5 +10,6 @@ namespace GameForum.Application.Functions.Posts.Commands.UpdatePost
     {
         public int PostId { get; set; }
         public string Content { get; set; }
+        public int TopicId { get; set; }
     }
 }

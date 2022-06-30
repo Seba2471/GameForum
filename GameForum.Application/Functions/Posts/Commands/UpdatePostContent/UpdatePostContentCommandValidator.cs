@@ -14,6 +14,12 @@ namespace GameForum.Application.Functions.Posts.Commands.UpdatePostContent
                 .WithMessage("{PropertyName} is too short")
                 .MaximumLength(500)
                 .WithMessage("{PropertyName} is too long");
+
+            RuleFor(p => p.PostId)
+                .NotNull();
+
+            RuleFor(p => p.TopicId)
+                .NotNull();
         }
     }
 }
