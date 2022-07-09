@@ -1,6 +1,7 @@
 ﻿using GameForum.Application.Functions.Topics.Commands.CreateTopic;
 using GameForum.Application.Functions.Topics.Queries.GetTopicsWithPostsListQuery;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameForum.Api.Controllers
@@ -26,6 +27,8 @@ namespace GameForum.Api.Controllers
                 notValidation => BadRequest(notValidation.ValidationErrors));
         }
 
+
+        [Authorize]
         [HttpGet("{id}", Name = "GetTopicWithPostList")]
         public async Task<ActionResult<int>> GetTopicWithPostsList([FromRoute] int id)
         {
