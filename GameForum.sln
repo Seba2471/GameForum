@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameForum.Application.UnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameForum.Persistence.EF", "GameForum.Persistence.EF\GameForum.Persistence.EF.csproj", "{3C04CD7E-26FF-4722-8CAC-695A0093D803}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameForum.Api", "GameForum.Api\GameForum.Api.csproj", "{019D0854-857E-4F71-986D-4C6681580234}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameForum.Api", "GameForum.Api\GameForum.Api.csproj", "{019D0854-857E-4F71-986D-4C6681580234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameForum.Application.Security", "GameForum.Application.Security\GameForum.Application.Security.csproj", "{ACD69BEF-630F-4066-B677-9C3BC097BCAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{019D0854-857E-4F71-986D-4C6681580234}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{019D0854-857E-4F71-986D-4C6681580234}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{019D0854-857E-4F71-986D-4C6681580234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD69BEF-630F-4066-B677-9C3BC097BCAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD69BEF-630F-4066-B677-9C3BC097BCAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD69BEF-630F-4066-B677-9C3BC097BCAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD69BEF-630F-4066-B677-9C3BC097BCAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{612E5F59-8BFF-46DF-A5F2-FB16A610060A} = {377327CD-8AC0-4909-92A0-B013C9973203}
 		{3C04CD7E-26FF-4722-8CAC-695A0093D803} = {AD4E1B1D-FA67-4B79-AFBB-5340F4A9E07F}
 		{019D0854-857E-4F71-986D-4C6681580234} = {D2369F5C-5D1B-4FC6-B872-ED7C7D8001C1}
+		{ACD69BEF-630F-4066-B677-9C3BC097BCAD} = {ADDF5200-5830-40B6-A343-539813CF5097}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C7296B4C-9D3E-4D27-9388-A21AFA256108}
