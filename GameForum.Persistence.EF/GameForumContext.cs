@@ -1,10 +1,13 @@
 ﻿using GameForum.Domain.Common;
 using GameForum.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace GameForum.Persistence.EF
 {
-    public class GameForumContext : DbContext
+    public class GameForumContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public GameForumContext(DbContextOptions<GameForumContext> options) : base(options)
         { }
@@ -16,6 +19,8 @@ namespace GameForum.Persistence.EF
         {
             modelBuilder.ApplyConfigurationsFromAssembly
                 (typeof(GameForumContext).Assembly);
+
+            base.OnModelCreating(modelBuilder);
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

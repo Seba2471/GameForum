@@ -1,5 +1,6 @@
 ﻿using GameForum.Application.Contracts.Persistence;
 using GameForum.Persistence.EF.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,10 @@ namespace GameForum.Persistence.EF
         {
             services.AddDbContext<GameForumContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("GameForumConnectionString")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<GameForumContext>()
+                .AddDefaultTokenProviders();
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
