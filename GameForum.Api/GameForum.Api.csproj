@@ -7,6 +7,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="MediatR" Version="10.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -16,7 +17,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\GameForum.Application\GameForum.Application.csproj" />
-		<ProjectReference Include="..\GameForum.Persistence.EF\GameForum.Persistence.EF.csproj" />
+		<ProjectReference Include="..\GameForum.Persistence.EF\GameForum.Infrastructure.Persistence.EF.csproj" />
 	</ItemGroup>
 
 </Project>
