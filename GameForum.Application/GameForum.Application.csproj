@@ -7,21 +7,26 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Functions\Posts\Queries\**" />
+	  <EmbeddedResource Remove="Functions\Posts\Queries\**" />
+	  <None Remove="Functions\Posts\Queries\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="11.0.1" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
 		<PackageReference Include="FluentValidation" Version="11.0.3" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.0.3" />
 		<PackageReference Include="MediatR" Version="10.0.1" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
 		<PackageReference Include="OneOf" Version="3.0.216" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\GameForum.Domain\GameForum.Domain.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Functions\Posts\Queries\" />
 	</ItemGroup>
 
 </Project>
