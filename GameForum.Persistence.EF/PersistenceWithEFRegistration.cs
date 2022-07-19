@@ -1,4 +1,5 @@
 ﻿using GameForum.Application.Contracts.Persistence;
+using GameForum.Domain.Entities;
 using GameForum.Infrastructure.Persistence.EF;
 using GameForum.Infrastructure.Persistence.EF.Repositories;
 using GameForum.Persistence.EF.Repositories;
@@ -22,7 +23,7 @@ namespace GameForum.Persistence.EF
             services.AddDbContext<GameForumContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("GameForumConnectionString")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<GameForumContext>()
                 .AddDefaultTokenProviders();
 

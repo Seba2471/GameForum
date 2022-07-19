@@ -1,19 +1,19 @@
 ﻿using GameForum.Domain.Common;
 using GameForum.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace GameForum.Persistence.EF
 {
-    public class GameForumContext : IdentityDbContext<IdentityUser, IdentityRole, string>
+    public class GameForumContext : IdentityDbContext<ApplicationUser>
     {
         public GameForumContext(DbContextOptions<GameForumContext> options) : base(options)
         { }
 
         public DbSet<Post> Posts { get; set; }
         public DbSet<Topic> Topics { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
