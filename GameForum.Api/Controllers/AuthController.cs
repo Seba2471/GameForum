@@ -21,7 +21,8 @@ namespace GameForum.Api.Controllers
         {
             var result = await _mediator.Send(request);
 
-            return result.Match<IActionResult>(success => Ok("User created"), error => BadRequest());
+            return result.Match<IActionResult>(success => Ok("User created"), notValidation => BadRequest(notValidation.ValidationErrors),
+               identityErrors => BadRequest(identityErrors.IdentityErrors), error => BadRequest("Something went wrong"));
         }
 
 

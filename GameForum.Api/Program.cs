@@ -36,7 +36,6 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-
 builder.Services.AddControllers();
 builder.Services.AddControllers().AddJsonOptions(option => option.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -69,6 +68,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
 
 
 var app = builder.Build();
