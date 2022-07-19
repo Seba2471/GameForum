@@ -1,7 +1,6 @@
 ﻿using GameForum.Application.Functions.Users.Commands.LoginUser;
 using GameForum.Application.Functions.Users.Commands.RegisterUser;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameForum.Api.Controllers
@@ -11,7 +10,7 @@ namespace GameForum.Api.Controllers
     public class AuthController : Controller
     {
         private IMediator _mediator;
-        public AuthController(UserManager<IdentityUser> userManager, IMediator mediator)
+        public AuthController(IMediator mediator)
         {
             _mediator = mediator;
         }

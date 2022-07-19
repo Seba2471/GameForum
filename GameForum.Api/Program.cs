@@ -13,6 +13,9 @@ var config = builder.Configuration;
 // Add services to the container.
 builder.Services.AddGameForumApplication();
 builder.Services.AddGameForumPersistenceEFServices(config);
+
+
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -27,9 +30,9 @@ builder.Services.AddAuthentication(options =>
         {
             ValidateIssuer = true,
             ValidateAudience = true,
-            ValidAudience = "ForumUsers",
-            ValidIssuer = "GameForum.Api",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("gawgawigawviawnviuawhbvuawvaw"))
+            ValidAudience = config["JSONWebTokensSettings:Audience"],
+            ValidIssuer = config["JSONWebTokensSettings:Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JSONWebTokensSettings:AccessKey"]))
         };
     });
 
