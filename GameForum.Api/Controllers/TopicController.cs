@@ -17,6 +17,7 @@ namespace GameForum.Api.Controllers
             _mediator = mediator;
         }
 
+        [Authorize]
         [HttpPost(Name = "AddTopic")]
         public async Task<IActionResult> Create([FromBody] CreatedTopicCommand createdTopicCommand)
         {

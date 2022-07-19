@@ -1,6 +1,7 @@
 ﻿using GameForum.Application.Functions.Posts.Commands.CreatePost;
 using GameForum.Application.Functions.Posts.Commands.UpdatePost;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameForum.Api.Controllers
@@ -16,6 +17,7 @@ namespace GameForum.Api.Controllers
             _mediator = mediator;
         }
 
+        [Authorize]
         [HttpPost(Name = "AddPost")]
         public async Task<IActionResult> Create([FromBody] CreatedPostCommand createdPostCommand)
         {
@@ -26,6 +28,7 @@ namespace GameForum.Api.Controllers
                 notValidate => BadRequest(notValidate.ValidationErrors));
         }
 
+        [Authorize]
         [HttpPatch(Name = "UpdatePostContent")]
         public async Task<IActionResult> UpdateContent([FromBody] UpdatePostContentCommand updatePostContentCommand)
         {
