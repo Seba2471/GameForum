@@ -1,8 +1,8 @@
 ﻿using GameForum.Application.Contracts.Persistence;
 using GameForum.Application.Functions.Users.Commands.LoginUser;
+using GameForum.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using OneOf;
 using OneOf.Types;
 
@@ -10,13 +10,11 @@ namespace GameForum.Application.Functions.Users.Commands.SignInUser
 {
     public class SignInUserCommandHandler : IRequestHandler<SignInUserCommand, OneOf<Success<SignInUserCommandResponse>, Error>>
     {
-        private UserManager<IdentityUser> _userManager;
-        private readonly IConfiguration _config;
-        private ITokenRepository<IdentityUser> _tokenRepository;
-        public SignInUserCommandHandler(UserManager<IdentityUser> userManager, IConfiguration config, ITokenRepository<IdentityUser> tokenRepository)
+        private UserManager<ApplicationUser> _userManager;
+        private ITokenRepository<ApplicationUser> _tokenRepository;
+        public SignInUserCommandHandler(UserManager<ApplicationUser> userManager, ITokenRepository<ApplicationUser> tokenRepository)
         {
             _userManager = userManager;
-            _config = config;
             _tokenRepository = tokenRepository;
         }
         public async Task<OneOf<Success<SignInUserCommandResponse>, Error>> Handle(SignInUserCommand request, CancellationToken cancellationToken)
@@ -33,14 +31,14 @@ namespace GameForum.Application.Functions.Users.Commands.SignInUser
 
             var accessToken = _tokenRepository.GenerateAccessToken(user, roles);
 
-            if (accessToken is null)
-            {
-                return new Error();
-            }
+            var refreshToken = _tokenRepository.GenereateRefreshToken(user);
+
+            await _tokenRepository.AddRefreshTokenAsync(refreshToken);
 
             var response = new SignInUserCommandResponse
             {
-                AccessToken = accessToken
+                AccessToken = accessToken,
+                RefreshToken = refreshToken.RefreshTokenValue
             };
 
 

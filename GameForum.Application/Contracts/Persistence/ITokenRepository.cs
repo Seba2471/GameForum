@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
+﻿using GameForum.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace GameForum.Application.Contracts.Persistence
 {
     public interface ITokenRepository<T> where T : IdentityUser
     {
         string GenerateAccessToken(T user, IList<string> roles);
-
-        string GenerateToken(List<Claim> claims, string secret, string issuer, string audience,
-            double durationTime);
+        RefreshToken GenereateRefreshToken(T user);
+        Task AddRefreshTokenAsync(RefreshToken refreshToken);
+        bool ValidateRefreshToken(string refreshToken);
     }
 }
