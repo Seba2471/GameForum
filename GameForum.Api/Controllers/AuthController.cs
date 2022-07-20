@@ -21,7 +21,7 @@ namespace GameForum.Api.Controllers
         {
             var result = await _mediator.Send(request);
 
-            return result.Match<IActionResult>(success => Ok("User created"), notValidation => BadRequest(notValidation.ValidationErrors),
+            return result.Match<IActionResult>(success => Ok("User created"), notValidate => BadRequest(notValidate.ValidationErrors),
                identityErrors => BadRequest(identityErrors.IdentityErrors), error => BadRequest("Something went wrong"));
         }
 
@@ -31,7 +31,8 @@ namespace GameForum.Api.Controllers
         {
             var result = await _mediator.Send(request);
 
-            return result.Match<IActionResult>(success => Ok(success.Value), error => BadRequest("Incorrect user name or password"));
+            return result.Match<IActionResult>(success => Ok(success.Value), identityError => BadRequest(identityError.IdentityErrors),
+                notValidate => BadRequest(notValidate.ValidationErrors));
         }
     }
 }
