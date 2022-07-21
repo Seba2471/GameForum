@@ -1,4 +1,5 @@
 ﻿using GameForum.Application.Functions.Users.Commands.LoginUser;
+using GameForum.Application.Functions.Users.Commands.RefreshToken;
 using GameForum.Application.Functions.Users.Commands.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,15 @@ namespace GameForum.Api.Controllers
 
         [HttpPost("login", Name = "Login")]
         public async Task<IActionResult> Login([FromBody] SignInUserCommand request)
+        {
+            var result = await _mediator.Send(request);
+
+            return result.Match<IActionResult>(success => Ok(success.Value), identityError => BadRequest(identityError.IdentityErrors),
+                notValidate => BadRequest(notValidate.ValidationErrors));
+        }
+
+        [HttpPost("refresh", Name = "refresh")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCommand request)
         {
             var result = await _mediator.Send(request);
 
