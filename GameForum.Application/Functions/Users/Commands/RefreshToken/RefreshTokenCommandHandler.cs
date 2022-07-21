@@ -1,5 +1,5 @@
 ﻿using GameForum.Application.Contracts.Persistence;
-using GameForum.Application.Functions.Users.Commands.LoginUser;
+using GameForum.Application.Functions.Users.Commands.SignInUser;
 using GameForum.Application.Responses;
 using GameForum.Domain.Entities;
 using MediatR;
@@ -7,20 +7,21 @@ using Microsoft.AspNetCore.Identity;
 using OneOf;
 using OneOf.Types;
 
-namespace GameForum.Application.Functions.Users.Commands.SignInUser
+namespace GameForum.Application.Functions.Users.Commands.RefreshToken
 {
-    public class SignInUserCommandHandler : IRequestHandler<SignInUserCommand, OneOf<Success<SignInUserCommandResponse>, IdentityErrorResponse, NotValidateResponse>>
+    public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, OneOf<Success<SignInUserCommandResponse>,
+        IdentityErrorResponse, NotValidateResponse>>
     {
         private UserManager<ApplicationUser> _userManager;
         private ITokenRepository<ApplicationUser> _tokenRepository;
-        public SignInUserCommandHandler(UserManager<ApplicationUser> userManager, ITokenRepository<ApplicationUser> tokenRepository)
+        public RefreshTokenCommandHandler(UserManager<ApplicationUser> userManager, ITokenRepository<ApplicationUser> tokenRepository)
         {
             _userManager = userManager;
             _tokenRepository = tokenRepository;
         }
-        public async Task<OneOf<Success<SignInUserCommandResponse>, IdentityErrorResponse, NotValidateResponse>> Handle(SignInUserCommand request, CancellationToken cancellationToken)
+        public async Task<OneOf<Success<SignInUserCommandResponse>, IdentityErrorResponse, NotValidateResponse>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            var validator = new SignInUserCommandValidator();
+            var validator = new RefreshTokenCommandValidator();
 
             var validatorResult = await validator.ValidateAsync(request, cancellationToken);
 
@@ -29,12 +30,18 @@ namespace GameForum.Application.Functions.Users.Commands.SignInUser
                 return new NotValidateResponse(validatorResult.Errors);
             }
 
-            var user = await _userManager.FindByNameAsync(request.userName);
+            var isValid = _tokenRepository.ValidateRefreshToken(request.RefreshToken);
 
-            if (user is null || !await _userManager.CheckPasswordAsync(user, request.password))
+            if (!isValid)
             {
-                return new IdentityErrorResponse("LoginFailed", "Incorrect user name or password");
+                return new IdentityErrorResponse("RefreshToken", "Refresh token not valid");
             }
+
+            var refreshTokenFromDb = await _tokenRepository.GetByTokenValue(request.RefreshToken);
+
+            await _tokenRepository.DeleteAsync(refreshTokenFromDb);
+
+            var user = await _userManager.FindByIdAsync(refreshTokenFromDb.UserId);
 
             var roles = await _userManager.GetRolesAsync(user);
 
@@ -53,6 +60,7 @@ namespace GameForum.Application.Functions.Users.Commands.SignInUser
 
 
             return new Success<SignInUserCommandResponse>(response);
+
         }
     }
 }

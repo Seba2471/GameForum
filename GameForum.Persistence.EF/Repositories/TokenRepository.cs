@@ -1,7 +1,9 @@
 ﻿using GameForum.Application.Contracts.Persistence;
 using GameForum.Domain.Entities;
 using GameForum.Persistence.EF;
+using GameForum.Persistence.EF.Repositories;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,14 +11,12 @@ using System.Text;
 
 namespace GameForum.Infrastructure.Persistence.EF.Repositories
 {
-    public class TokenRepository<T> : ITokenRepository<T> where T : IdentityUser
+    public class TokenRepository<T> : BaseRepository<RefreshToken>, ITokenRepository<T> where T : IdentityUser
     {
         private readonly JSONWebTokensSettings _jsonWebTokensSettings;
-        private readonly GameForumContext _dbContext;
-        public TokenRepository(JSONWebTokensSettings jsonWebTokensSettings, GameForumContext dbContext)
+        public TokenRepository(JSONWebTokensSettings jsonWebTokensSettings, GameForumContext dbContext) : base(dbContext)
         {
             _jsonWebTokensSettings = jsonWebTokensSettings;
-            _dbContext = dbContext;
         }
 
         public string GenerateAccessToken(T user, IList<string> roles)
@@ -61,12 +61,6 @@ namespace GameForum.Infrastructure.Persistence.EF.Repositories
             };
         }
 
-        public async Task AddRefreshTokenAsync(RefreshToken refreshToken)
-        {
-            await _dbContext.RefreshTokens.AddAsync(refreshToken);
-            await _dbContext.SaveChangesAsync();
-        }
-
         public bool ValidateRefreshToken(string refreshToken)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -78,15 +72,17 @@ namespace GameForum.Infrastructure.Persistence.EF.Repositories
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jsonWebTokensSettings.RefreshKey))
             };
 
-            var claims = tokenHandler.ValidateToken(refreshToken, validationParameters, out SecurityToken validatedToken);
-
-
-            if (claims != null)
+            try
             {
+                tokenHandler.ValidateToken(refreshToken, validationParameters,
+                    out SecurityToken validatedToken);
+
                 return true;
             }
-
-            return false;
+            catch
+            {
+                return false;
+            }
         }
 
         private string GenerateToken(List<Claim> claims, string secret, string issuer, string audience, double durationInMinutes)
@@ -101,6 +97,13 @@ namespace GameForum.Infrastructure.Persistence.EF.Repositories
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+        }
+
+        public async Task<RefreshToken> GetByTokenValue(string refreshToken)
+        {
+            var token = await _dbContext.RefreshTokens.FirstOrDefaultAsync(r => r.RefreshTokenValue == refreshToken);
+
+            return token;
         }
     }
 }
