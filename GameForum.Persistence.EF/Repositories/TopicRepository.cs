@@ -13,5 +13,9 @@ namespace GameForum.Persistence.EF.Repositories
         {
             return await _dbContext.Topics.Include(t => t.Posts).FirstOrDefaultAsync(t => t.TopicId == topicId);
         }
+        public async Task<bool> TopicExists(int topicId)
+        {
+            return await _dbContext.Topics.AnyAsync(t => t.TopicId == topicId);
+        }
     }
 }

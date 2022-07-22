@@ -2,6 +2,7 @@
 using MediatR;
 using OneOf;
 using OneOf.Types;
+using System.Text.Json.Serialization;
 
 
 namespace GameForum.Application.Functions.Posts.Commands.CreatePost
@@ -11,5 +12,7 @@ namespace GameForum.Application.Functions.Posts.Commands.CreatePost
     {
         public string Content { get; set; }
         public int TopicId { get; set; }
+        [JsonIgnore]
+        public string AuthorId { get; set; }
     }
 }

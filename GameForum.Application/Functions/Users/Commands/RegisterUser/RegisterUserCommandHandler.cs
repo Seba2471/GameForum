@@ -27,7 +27,6 @@ namespace GameForum.Application.Functions.Users.Commands.RegisterUser
                 return new NotValidateResponse(validatorResult.Errors);
             }
 
-
             var user = new ApplicationUser { UserName = request.UserName, Email = request.Email };
             var result = await _userManager.CreateAsync(user, request.Password);
 

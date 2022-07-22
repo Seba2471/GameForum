@@ -2,6 +2,7 @@
 using MediatR;
 using OneOf;
 using OneOf.Types;
+using System.Text.Json.Serialization;
 
 namespace GameForum.Application.Functions.Topics.Commands.CreateTopic
 {
@@ -10,5 +11,7 @@ namespace GameForum.Application.Functions.Topics.Commands.CreateTopic
     {
         public string Title { get; set; }
         public string Content { get; set; }
+        [JsonIgnore]
+        public string AuthorId { get; set; }
     }
 }
