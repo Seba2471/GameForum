@@ -3,6 +3,7 @@ using GameForum.Application.Functions.Posts.Commands.UpdatePost;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GameForum.Api.Controllers
 {
@@ -21,6 +22,8 @@ namespace GameForum.Api.Controllers
         [HttpPost(Name = "AddPost")]
         public async Task<IActionResult> Create([FromBody] CreatedPostCommand createdPostCommand)
         {
+            createdPostCommand.AuthorId = User.FindFirstValue(ClaimTypes.Sid);
+
             var result = await _mediator.Send(createdPostCommand);
 
             return result.Match<IActionResult>(
