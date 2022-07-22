@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
 using GameForum.Application.Contracts.Persistence;
+using GameForum.Application.Responses;
 using GameForum.Domain.Entities;
 using MediatR;
+using OneOf;
+using OneOf.Types;
 
 namespace GameForum.Application.Functions.Topics.Commands.CreateTopic
 {
-    public class CreatedTopicCommandHandler : IRequestHandler<CreatedTopicCommand, CreatedTopicCommandResponse>
+    using HandlerResponse = OneOf<Success<CreatedTopicCommandResponse>, NotValidateResponse>;
+    public class CreatedTopicCommandHandler : IRequestHandler<CreatedTopicCommand, HandlerResponse>
     {
 
         private readonly ITopicRepository _topicRespository;
@@ -17,7 +21,7 @@ namespace GameForum.Application.Functions.Topics.Commands.CreateTopic
             _mapper = mapper;
         }
 
-        public async Task<CreatedTopicCommandResponse> Handle(CreatedTopicCommand request, CancellationToken cancellationToken)
+        public async Task<HandlerResponse> Handle(CreatedTopicCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreatedTopicCommandValidator();
 
@@ -25,14 +29,16 @@ namespace GameForum.Application.Functions.Topics.Commands.CreateTopic
 
             if (!validatorResult.IsValid)
             {
-                return new CreatedTopicCommandResponse(validatorResult);
+                return new NotValidateResponse(validatorResult.Errors);
             }
 
             var topic = _mapper.Map<Topic>(request);
 
             await _topicRespository.AddAsync(topic);
 
-            return new CreatedTopicCommandResponse(topic.TopicId);
+            var responseTopic = _mapper.Map<CreatedTopicCommandResponse>(topic);
+
+            return new Success<CreatedTopicCommandResponse>(responseTopic);
         }
     }
 }

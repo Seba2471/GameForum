@@ -22,7 +22,6 @@ namespace GameForum.Application.UnitTest.Mocks
                     return topic;
                 });
 
-
             mockTopicRepository.Setup(repo => repo.AddAsync(It.IsAny<Topic>())).ReturnsAsync(
                 (Topic topic) =>
                 {
@@ -41,7 +40,6 @@ namespace GameForum.Application.UnitTest.Mocks
                 TopicId = 1,
                 Title = "Pomoc z ekwipunkiem",
                 Content = "Proszę o pomoc z ekwipunkiem na 35 lvl",
-                DepartmentId = 1
             };
 
             Topic t2 = new Topic()
@@ -49,7 +47,6 @@ namespace GameForum.Application.UnitTest.Mocks
                 TopicId = 2,
                 Title = "Pomoc z expowiskiem",
                 Content = "Gdzie moge wbijać poziom na 40 lvl ?",
-                DepartmentId = 2,
             };
 
             List<Topic> topics = new List<Topic>();
@@ -60,20 +57,18 @@ namespace GameForum.Application.UnitTest.Mocks
             return topics;
         }
 
-        private static Topic GetTopicByIdWithPostsList(int i)
+        private static Topic GetTopicByIdWithPostsList(int id)
         {
             var posts = GetPosts();
 
-            Topic t1 = new Topic()
-            {
-                TopicId = i,
-                Title = "Pomoc z ekwipunkiem",
-                Content = "Proszę o pomoc z ekwipunkiem na 35 lvl",
-                DepartmentId = 1,
-                Posts = posts.Where(p => p.TopicId == 1).ToList()
-            };
 
-            return t1;
+            var topics = GetTopics();
+
+            var topic = topics.FirstOrDefault(t => t.TopicId == id);
+
+            topic.Posts = posts.Where(p => p.TopicId == id).ToList();
+
+            return topic;
         }
 
 
@@ -91,6 +86,28 @@ namespace GameForum.Application.UnitTest.Mocks
                     posts.Add(post);
                     return post;
                 });
+
+            mockPostRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(
+                (int id) =>
+                {
+                    var post = posts.Find(p => p.PostId == id);
+                    return post;
+                });
+
+            mockPostRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Post>())).Callback(
+                (Post post) =>
+                {
+                    var postToUpdate = posts.First(p => p.PostId == post.PostId);
+
+                    postToUpdate.Content = post.Content;
+                });
+
+            mockPostRepository.Setup(repo => repo.IsPostExists(It.IsAny<int>())).ReturnsAsync(
+                (int id) =>
+                {
+                    return posts.Any(p => p.PostId == id);
+                });
+
 
             return mockPostRepository;
         }

@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using GameForum.Application.Functions.Posts.Commands.CreatePost;
-using GameForum.Application.Functions.Posts.Queries.GetPostList;
+using GameForum.Application.Functions.Posts.Commands.UpdatePost;
 using GameForum.Application.Functions.Topics.Commands.CreateTopic;
 using GameForum.Application.Functions.Topics.Queries.GetTopicsList;
+using GameForum.Application.Functions.Topics.Queries.GetTopicWithPostsList;
 using GameForum.Domain.Entities;
 
 namespace GameForum.Application.Mapper
@@ -11,9 +12,6 @@ namespace GameForum.Application.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<Post, PostInListViewModel>()
-                .ReverseMap();
-
             CreateMap<Topic, TopicInListViewModel>()
                 .ReverseMap();
 
@@ -21,6 +19,18 @@ namespace GameForum.Application.Mapper
                 .ReverseMap();
 
             CreateMap<Topic, CreatedTopicCommand>()
+                .ReverseMap();
+
+            CreateMap<Topic, TopicWithByIdPostsListViewModel>()
+                .ReverseMap();
+
+            CreateMap<CreatedTopicCommandResponse, Topic>()
+                .ReverseMap();
+
+            CreateMap<CreatedPostCommandResponse, Post>()
+                .ReverseMap();
+
+            CreateMap<Post, UpdatePostContentCommand>()
                 .ReverseMap();
         }
     }

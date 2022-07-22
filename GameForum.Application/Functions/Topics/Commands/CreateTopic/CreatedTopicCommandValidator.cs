@@ -23,9 +23,9 @@ namespace GameForum.Application.Functions.Topics.Commands.CreateTopic
                 .NotNull()
                 .WithMessage("{PropertyName} is required");
 
-            RuleFor(t => t.DepartmentId)
-                .GreaterThan(0)
-                .WithMessage("Incorrect department ID");
+            //RuleFor(t => t.DepartmentId)
+            //    .GreaterThan(0)
+            //    .WithMessage("Incorrect department ID");
         }
     }
 }

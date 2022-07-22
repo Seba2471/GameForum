@@ -4,7 +4,6 @@ namespace GameForum.Application.Responses
 {
     public class BaseResponse
     {
-        public ResponseStatus Status { get; set; }
         public bool Success { get; set; }
         public string Message { get; set; }
 

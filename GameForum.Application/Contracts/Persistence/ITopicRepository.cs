@@ -4,6 +4,6 @@ namespace GameForum.Application.Contracts.Persistence
 {
     public interface ITopicRepository : IAsyncRepository<Topic>
     {
-        Task<Topic?> GetTopicByIdWithPostsList(int topicId);
+        Task<Topic> GetTopicByIdWithPostsList(int topicId);
     }
 }
