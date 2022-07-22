@@ -4,6 +4,7 @@ using GameForum.Persistence.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameForum.Persistence.EF.Migrations
 {
     [DbContext(typeof(GameForumContext))]
-    partial class GameForumContextModelSnapshot : ModelSnapshot
+    [Migration("20220722082205_AddedAuthorToPostAndTopic")]
+    partial class AddedAuthorToPostAndTopic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
