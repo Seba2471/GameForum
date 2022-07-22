@@ -8,13 +8,21 @@ namespace GameForum.Persistence.EF.Configuration
     {
         public void Configure(EntityTypeBuilder<Topic> builder)
         {
-            builder.Property(e => e.Title)
+            builder.Property(t => t.Title)
                 .IsRequired()
                 .HasMaxLength(80);
 
-            builder.Property(e => e.Content)
+            builder.Property(t => t.Content)
                 .IsRequired()
                 .HasMaxLength(500);
+
+            builder.Property(t => t.AuthorId)
+                .IsRequired();
+
+            builder.HasOne(t => t.Author)
+                .WithMany(u => u.Topics)
+                .HasForeignKey(p => p.AuthorId)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }
