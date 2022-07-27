@@ -35,10 +35,12 @@ namespace GameForum.Api.Controllers
         [HttpPatch(Name = "UpdatePostContent")]
         public async Task<IActionResult> UpdateContent([FromBody] UpdatePostContentCommand updatePostContentCommand)
         {
+            updatePostContentCommand.AuthorId = User.FindFirstValue(ClaimTypes.Sid);
+
             var result = await _mediator.Send(updatePostContentCommand);
 
-            return result.Match<IActionResult>(success => NoContent(), notValidate => BadRequest(notValidate.ValidationErrors),
-                notFound => BadRequest());
+            return result.Match<IActionResult>(success => Ok(success.Value), notValidate => BadRequest(notValidate.ValidationErrors),
+                notAuthor => BadRequest(notAuthor.Message));
         }
     }
 }

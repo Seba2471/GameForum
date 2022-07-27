@@ -1,11 +1,12 @@
 ﻿using FluentValidation;
+using GameForum.Application.Contracts.Persistence;
 using GameForum.Application.Functions.Posts.Commands.UpdatePost;
 
 namespace GameForum.Application.Functions.Posts.Commands.UpdatePostContent
 {
     public class UpdatePostContentCommandValidator : AbstractValidator<UpdatePostContentCommand>
     {
-        public UpdatePostContentCommandValidator()
+        public UpdatePostContentCommandValidator(IPostRepository postRepository)
         {
             RuleFor(p => p.Content)
                 .NotNull()
@@ -16,10 +17,11 @@ namespace GameForum.Application.Functions.Posts.Commands.UpdatePostContent
                 .WithMessage("{PropertyName} is too long");
 
             RuleFor(p => p.PostId)
-                .NotNull();
-
-            RuleFor(p => p.TopicId)
-                .NotNull();
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("{PropertyName} is required")
+                .MustAsync(async (postId, cancellation) => await postRepository.PostExists(postId))
+                .WithMessage("{PropertyName} not exists");
         }
     }
 }

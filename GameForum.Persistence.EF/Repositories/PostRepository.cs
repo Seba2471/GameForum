@@ -9,7 +9,7 @@ namespace GameForum.Persistence.EF.Repositories
         public PostRepository(GameForumContext dbContext) : base(dbContext)
         { }
 
-        public async Task<bool> IsPostExists(int postId)
+        public async Task<bool> PostExists(int postId)
         {
             var result = await _dbContext.Posts.AnyAsync(p => p.PostId == postId);
 
