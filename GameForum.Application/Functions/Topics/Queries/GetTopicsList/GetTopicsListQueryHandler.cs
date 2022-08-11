@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using GameForum.Application.Contracts.Persistence;
+using GameForum.Application.Functions.Pagination;
 using GameForum.Domain.Entities;
 using MediatR;
 
 namespace GameForum.Application.Functions.Topics.Queries.GetTopicsList
 {
-    public class GetTopicsListQueryHandler : IRequestHandler<GetTopicsListQuery, List<TopicInListViewModel>>
+    public class GetTopicsListQueryHandler : IRequestHandler<GetTopicsListQuery, PaginationResponse<Topic>>
     {
         private readonly IAsyncRepository<Topic> _topicRepository;
         private readonly IMapper _mapper;
@@ -16,13 +17,13 @@ namespace GameForum.Application.Functions.Topics.Queries.GetTopicsList
             _mapper = mapper;
         }
 
-        public async Task<List<TopicInListViewModel>> Handle(GetTopicsListQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResponse<Topic>> Handle(GetTopicsListQuery request, CancellationToken cancellationToken)
         {
-            var all = await _topicRepository.GetAllAsync();
+            var all = await _topicRepository.GetPageAsync(request.PageSize, request.PageNumber);
 
-            var allordered = all.OrderBy(x => x.CreatedDate);
+            // var mapped = _mapper.Map<TopicInListViewModel>(all.Items);
 
-            return _mapper.Map<List<TopicInListViewModel>>(all);
+            return all;
         }
     }
 }

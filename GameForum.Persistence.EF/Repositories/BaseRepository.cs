@@ -1,4 +1,5 @@
 ﻿using GameForum.Application.Contracts.Persistence;
+using GameForum.Application.Functions.Pagination;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameForum.Persistence.EF.Repositories
@@ -28,7 +29,23 @@ namespace GameForum.Persistence.EF.Repositories
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            return await _dbContext.Set<T>()
+                .ToListAsync();
+        }
+
+        public async Task<PaginationResponse<T>> GetPageAsync(int pageSize, int pageNumber)
+        {
+            var baseQuery = _dbContext.Set<T>();
+
+
+            var items = await baseQuery
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            var totalCount = await baseQuery.CountAsync();
+
+            return new PaginationResponse<T>(items, totalCount, pageSize, pageNumber);
         }
 
         public async Task<T> GetByIdAsync(int id)
