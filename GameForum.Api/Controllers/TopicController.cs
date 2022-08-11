@@ -1,4 +1,5 @@
 ﻿using GameForum.Application.Functions.Topics.Commands.CreateTopic;
+using GameForum.Application.Functions.Topics.Queries.GetTopicsList;
 using GameForum.Application.Functions.Topics.Queries.GetTopicsWithPostsListQuery;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -40,6 +41,14 @@ namespace GameForum.Api.Controllers
             var result = await _mediator.Send(query);
 
             return Ok(result);
+        }
+
+        [HttpGet(Name = "GetTopicsList")]
+        public async Task<IActionResult> GetTopicsList([FromQuery] GetTopicsListQuery getTopicsListQuery)
+        {
+            var topics = await _mediator.Send(getTopicsListQuery);
+
+            return Ok(topics);
         }
     }
 }
