@@ -2,18 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace GameForum.Persistence.EF.Configuration
+namespace GameForum.Infrastructure.Persistence.EF.Configuration
 {
     public class PostConfiguration : IEntityTypeConfiguration<Post>
     {
         public void Configure(EntityTypeBuilder<Post> builder)
         {
-            builder.Property(e => e.Content)
+            builder.Property(p => p.Content)
                 .IsRequired()
                 .HasMaxLength(500);
 
-            builder.Property(e => e.PostId)
+            builder.Property(p => p.PostId)
                 .IsRequired();
+
+            builder.Property(p => p.AuthorId)
+                .IsRequired();
+
+            builder.HasOne(p => p.Author)
+                .WithMany(u => u.Posts)
+                .HasForeignKey(p => p.AuthorId)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

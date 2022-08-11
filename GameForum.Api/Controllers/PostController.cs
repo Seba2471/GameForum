@@ -3,6 +3,7 @@ using GameForum.Application.Functions.Posts.Commands.UpdatePost;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GameForum.Api.Controllers
 {
@@ -21,6 +22,8 @@ namespace GameForum.Api.Controllers
         [HttpPost(Name = "AddPost")]
         public async Task<IActionResult> Create([FromBody] CreatedPostCommand createdPostCommand)
         {
+            createdPostCommand.AuthorId = User.FindFirstValue(ClaimTypes.Sid);
+
             var result = await _mediator.Send(createdPostCommand);
 
             return result.Match<IActionResult>(
@@ -32,10 +35,12 @@ namespace GameForum.Api.Controllers
         [HttpPatch(Name = "UpdatePostContent")]
         public async Task<IActionResult> UpdateContent([FromBody] UpdatePostContentCommand updatePostContentCommand)
         {
+            updatePostContentCommand.AuthorId = User.FindFirstValue(ClaimTypes.Sid);
+
             var result = await _mediator.Send(updatePostContentCommand);
 
-            return result.Match<IActionResult>(success => NoContent(), notValidate => BadRequest(notValidate.ValidationErrors),
-                notFound => BadRequest());
+            return result.Match<IActionResult>(success => Ok(success.Value), notValidate => BadRequest(notValidate.ValidationErrors),
+                notAuthor => BadRequest(notAuthor.Message));
         }
     }
 }

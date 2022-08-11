@@ -2,14 +2,13 @@
 using GameForum.Application.Contracts.Persistence;
 using GameForum.Application.Functions.Posts.Commands.UpdatePost;
 using GameForum.Application.Responses;
-using GameForum.Domain.Entities;
 using MediatR;
 using OneOf;
 using OneOf.Types;
 
 namespace GameForum.Application.Functions.Posts.Commands.UpdatePostContent
 {
-    using HandlerResponse = OneOf<Success, NotValidateResponse, NotFound>;
+    using HandlerResponse = OneOf<Success<UpdatePostContentCommandResponse>, NotValidateResponse, NotAuthorResponse>;
     public class UpdatePostContentCommandHandler : IRequestHandler<UpdatePostContentCommand, HandlerResponse>
     {
         private readonly IPostRepository _postRepository;
@@ -24,27 +23,30 @@ namespace GameForum.Application.Functions.Posts.Commands.UpdatePostContent
 
         public async Task<HandlerResponse> Handle(UpdatePostContentCommand request, CancellationToken cancellationToken)
         {
-            var validator = new UpdatePostContentCommandValidator();
+            var validator = new UpdatePostContentCommandValidator(_postRepository);
 
-            var validatorResult = await validator.ValidateAsync(request);
+            var validatorResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (!validatorResult.IsValid)
             {
                 return new NotValidateResponse(validatorResult.Errors);
             }
 
-            bool postExists = await _postRepository.IsPostExists(request.PostId);
 
-            if (!postExists)
+            var post = await _postRepository.GetByIdAsync(request.PostId);
+
+            if (post.AuthorId != request.AuthorId)
             {
-                return new NotFound();
+                return new NotAuthorResponse("post");
             }
 
-            var post = _mapper.Map<Post>(request);
+            post.Content = request.Content;
 
             await _postRepository.UpdateAsync(post);
 
-            return new Success();
+            var postResponse = _mapper.Map<UpdatePostContentCommandResponse>(post);
+
+            return new Success<UpdatePostContentCommandResponse>(postResponse);
         }
     }
 }

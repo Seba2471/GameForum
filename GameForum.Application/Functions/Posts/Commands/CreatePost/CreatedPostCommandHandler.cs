@@ -12,18 +12,19 @@ namespace GameForum.Application.Functions.Posts.Commands.CreatePost
     public class CreatedPostCommandHandler : IRequestHandler<CreatedPostCommand, HandlerResponse>
     {
         private readonly IPostRepository _postRepository;
+        private readonly ITopicRepository _topicRepository;
         private readonly IMapper _mapper;
 
-        public CreatedPostCommandHandler(IPostRepository postRepository, IMapper mapper)
+        public CreatedPostCommandHandler(IPostRepository postRepository, IMapper mapper, ITopicRepository topicRepository)
         {
             _postRepository = postRepository;
+            _topicRepository = topicRepository;
             _mapper = mapper;
         }
 
         public async Task<HandlerResponse> Handle(CreatedPostCommand request, CancellationToken cancellationToken)
         {
-
-            var validator = new CreatedPostCommandValidator();
+            var validator = new CreatedPostCommandValidator(_topicRepository);
 
             var validatorResult = await validator.ValidateAsync(request);
 

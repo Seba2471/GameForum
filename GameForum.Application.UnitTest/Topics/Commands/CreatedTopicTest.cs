@@ -39,6 +39,7 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
                 Title = new string('*', 10),
                 Content = new string('*', 30),
+                AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
             };
 
             var response = await handler.Handle(command, CancellationToken.None);
@@ -61,6 +62,7 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
                 Title = new string('*', 2),
                 Content = new string('*', 30),
+                AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
             };
 
             var response = await handler.Handle(command, CancellationToken.None);
@@ -84,6 +86,7 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
                 Title = new string('*', 81),
                 Content = new string('*', 30),
+                AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
             };
 
             var response = await handler.Handle(command, CancellationToken.None);
@@ -108,6 +111,7 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
                 Title = new string('*', 25),
                 Content = new string('*', 2),
+                AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
             };
 
             var response = await handler.Handle(command, CancellationToken.None);
@@ -132,6 +136,7 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
                 Title = new string('*', 25),
                 Content = new string('*', 501),
+                AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
             };
 
             var response = await handler.Handle(command, CancellationToken.None);

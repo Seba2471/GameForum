@@ -4,6 +4,7 @@ using GameForum.Persistence.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameForum.Persistence.EF.Migrations
 {
     [DbContext(typeof(GameForumContext))]
-    partial class GameForumContextModelSnapshot : ModelSnapshot
+    [Migration("20220722082205_AddedAuthorToPostAndTopic")]
+    partial class AddedAuthorToPostAndTopic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -217,29 +219,6 @@ namespace GameForum.Persistence.EF.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "c3bc9e48-62f1-44f0-9115-10ff88a5fdc5",
-                            ConcurrencyStamp = "218f03dd-7dd6-4d03-9e64-6b99c30de266",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "5df4e6e2-384b-47c7-8e78-3adccc4525e8",
-                            ConcurrencyStamp = "03cdd183-51c5-4edd-b850-f672ede00bda",
-                            Name = "Moderator",
-                            NormalizedName = "MODERATOR"
-                        },
-                        new
-                        {
-                            Id = "578c424f-e185-499d-be23-c5840a4e058b",
-                            ConcurrencyStamp = "c99bf30a-512e-4292-ad16-bca4040ab237",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

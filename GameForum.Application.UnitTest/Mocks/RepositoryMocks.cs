@@ -29,6 +29,11 @@ namespace GameForum.Application.UnitTest.Mocks
                     return topic;
                 });
 
+            mockTopicRepository.Setup(repo => repo.TopicExists(It.IsAny<int>())).ReturnsAsync((int id) =>
+            {
+                return topics.Any(topic => topic.TopicId == id);
+            });
+
 
             return mockTopicRepository;
         }
@@ -102,7 +107,7 @@ namespace GameForum.Application.UnitTest.Mocks
                     postToUpdate.Content = post.Content;
                 });
 
-            mockPostRepository.Setup(repo => repo.IsPostExists(It.IsAny<int>())).ReturnsAsync(
+            mockPostRepository.Setup(repo => repo.PostExists(It.IsAny<int>())).ReturnsAsync(
                 (int id) =>
                 {
                     return posts.Any(p => p.PostId == id);
@@ -118,19 +123,22 @@ namespace GameForum.Application.UnitTest.Mocks
             {
                 PostId = 1,
                 Content = "Dwuręczny miecz",
-                TopicId = 1
+                TopicId = 1,
+                AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
             };
             Post p2 = new Post()
             {
                 PostId = 2,
                 Content = "Gobliny polecam bardzo",
-                TopicId = 2
+                TopicId = 2,
+                AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
             };
             Post p3 = new Post()
             {
                 PostId = 3,
                 Content = "Jednoręczny lepszy",
-                TopicId = 1
+                TopicId = 1,
+                AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
             };
 
             List<Post> posts = new List<Post>();

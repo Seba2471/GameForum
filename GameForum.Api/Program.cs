@@ -3,6 +3,7 @@ using GameForum.Persistence.EF;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -33,6 +34,32 @@ builder.Services.AddAuthentication(options =>
             ValidAudience = config["JSONWebTokensSettings:Audience"],
             ValidIssuer = config["JSONWebTokensSettings:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JSONWebTokensSettings:AccessKey"]))
+        };
+
+        options.Events = new JwtBearerEvents()
+        {
+            OnAuthenticationFailed = c =>
+            {
+                c.NoResult();
+                c.Response.StatusCode = 500;
+                c.Response.ContentType = "text/plain";
+                return c.Response.WriteAsync(c.Exception.ToString());
+            },
+            OnChallenge = context =>
+            {
+                context.HandleResponse();
+                context.Response.StatusCode = 401;
+                context.Response.ContentType = "application/json";
+                var result = JsonConvert.SerializeObject("401 Not authorized");
+                return context.Response.WriteAsync(result);
+            },
+            OnForbidden = context =>
+            {
+                context.Response.StatusCode = 403;
+                context.Response.ContentType = "application/json";
+                var result = JsonConvert.SerializeObject("403 Not authorized");
+                return context.Response.WriteAsync(result);
+            },
         };
     });
 

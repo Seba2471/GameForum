@@ -3,6 +3,7 @@ using GameForum.Application.Functions.Topics.Queries.GetTopicsWithPostsListQuery
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GameForum.Api.Controllers
 {
@@ -21,6 +22,8 @@ namespace GameForum.Api.Controllers
         [HttpPost(Name = "AddTopic")]
         public async Task<IActionResult> Create([FromBody] CreatedTopicCommand createdTopicCommand)
         {
+            createdTopicCommand.AuthorId = User.FindFirstValue(ClaimTypes.Sid);
+
             var result = await _mediator.Send(createdTopicCommand);
 
             return result.Match<IActionResult>(
