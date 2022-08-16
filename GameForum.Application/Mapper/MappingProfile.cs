@@ -13,8 +13,7 @@ namespace GameForum.Application.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<Topic, TopicInListViewModel>()
-                .ReverseMap();
+            CreateMap<Topic, TopicDto>();
 
             CreateMap<Post, CreatedPostCommand>()
                 .ReverseMap();

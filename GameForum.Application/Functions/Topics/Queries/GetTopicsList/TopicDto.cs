@@ -1,11 +1,11 @@
 ﻿namespace GameForum.Application.Functions.Topics.Queries.GetTopicsList
 {
-    public class TopicInListViewModel
+    public class TopicDto
     {
-        public int Id { get; set; }
+        public int TopicId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime LastModifiedDate { get; set; }
     }
 }

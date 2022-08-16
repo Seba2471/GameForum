@@ -28,4 +28,4 @@
 		<ProjectReference Include="..\GameForum.Domain\GameForum.Domain.csproj" />
 	</ItemGroup>
 
-</Project>
+		</Project>
