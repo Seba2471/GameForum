@@ -1,4 +1,4 @@
-﻿namespace GameForum.Application.Functions.Pagination
+﻿namespace GameForum.Application.Models.Pagination
 {
     public class PaginationQuery
     {

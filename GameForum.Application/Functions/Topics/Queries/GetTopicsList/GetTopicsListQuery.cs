@@ -1,4 +1,4 @@
-﻿using GameForum.Application.Functions.Pagination;
+﻿using GameForum.Application.Models.Pagination;
 using MediatR;
 
 namespace GameForum.Application.Functions.Topics.Queries.GetTopicsList

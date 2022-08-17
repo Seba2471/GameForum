@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using GameForum.Application.Contracts.Persistence;
-using GameForum.Application.Functions.Topics.Queries.GetTopicsWithPostsListQuery;
+using GameForum.Application.Functions.Topics.Queries.GetTopicByIdWithPostsList;
 using GameForum.Application.Functions.Topics.Queries.GetTopicWithPostsList;
 using GameForum.Application.Mapper;
 using GameForum.Application.UnitTest.Mocks;

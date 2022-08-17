@@ -4,7 +4,7 @@ using GameForum.Application.Functions.Posts.Commands.UpdatePost;
 using GameForum.Application.Functions.Posts.Commands.UpdatePostContent;
 using GameForum.Application.Functions.Topics.Commands.CreateTopic;
 using GameForum.Application.Functions.Topics.Queries.GetTopicsList;
-using GameForum.Application.Functions.Topics.Queries.GetTopicWithPostsList;
+using GameForum.Application.Models;
 using GameForum.Domain.Entities;
 
 namespace GameForum.Application.Mapper
@@ -21,7 +21,7 @@ namespace GameForum.Application.Mapper
             CreateMap<Topic, CreatedTopicCommand>()
                 .ReverseMap();
 
-            CreateMap<Topic, TopicWithByIdPostsListViewModel>()
+            CreateMap<Topic, TopicDetailWithPostsDto>()
                 .ReverseMap();
 
             CreateMap<CreatedTopicCommandResponse, Topic>()
@@ -35,6 +35,11 @@ namespace GameForum.Application.Mapper
 
             CreateMap<Post, UpdatePostContentCommandResponse>()
                 .ReverseMap();
+
+            CreateMap<Post, PostDto>()
+                .ReverseMap();
+
+            CreateMap<ApplicationUser, AuthorDto>();
         }
     }
 }

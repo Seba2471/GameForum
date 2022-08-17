@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using GameForum.Application.Contracts.Persistence;
-using GameForum.Application.Functions.Topics.Queries.GetTopicsWithPostsListQuery;
-using GameForum.Domain.Entities;
+using GameForum.Application.Models;
 using MediatR;
 
-namespace GameForum.Application.Functions.Topics.Queries.GetTopicWithPostsList
+namespace GameForum.Application.Functions.Topics.Queries.GetTopicByIdWithPostsList
 {
-    public class GetTopicByIdWithPostsListQueryHandler : IRequestHandler<GetTopicByIdWithPostsListQuery, Topic>
+    public class GetTopicByIdWithPostsListQueryHandler : IRequestHandler<GetTopicByIdWithPostsListQuery, TopicDetailWithPostsDto>
     {
         private readonly ITopicRepository _topicRepository;
         private readonly IMapper _mapper;
@@ -17,9 +16,9 @@ namespace GameForum.Application.Functions.Topics.Queries.GetTopicWithPostsList
             _mapper = mapper;
         }
 
-        public async Task<Topic> Handle(GetTopicByIdWithPostsListQuery request, CancellationToken cancellationToken)
+        public async Task<TopicDetailWithPostsDto> Handle(GetTopicByIdWithPostsListQuery request, CancellationToken cancellationToken)
         {
-            return await _topicRepository.GetTopicByIdWithPostsList(request.Id);
+            return await _topicRepository.GetTopicByIdWithPosts(request.Id, request.PageNumber, request.PageSize);
         }
     }
 }

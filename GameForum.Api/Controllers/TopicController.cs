@@ -1,6 +1,7 @@
 ﻿using GameForum.Application.Functions.Topics.Commands.CreateTopic;
+using GameForum.Application.Functions.Topics.Queries.GetTopicByIdWithPostsList;
 using GameForum.Application.Functions.Topics.Queries.GetTopicsList;
-using GameForum.Application.Functions.Topics.Queries.GetTopicsWithPostsListQuery;
+using GameForum.Application.Models.Pagination;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,13 +33,15 @@ namespace GameForum.Api.Controllers
                 notValidation => BadRequest(notValidation.ValidationErrors));
         }
 
-        [Authorize]
-        [HttpGet("{id}", Name = "GetTopicWithPostList")]
-        public async Task<ActionResult<int>> GetTopicWithPostsList([FromRoute] int id)
+        [HttpGet("{id}", Name = "GetTopicDetailWithPostList")]
+        public async Task<ActionResult<int>> GetTopicDetailWithPostsList([FromRoute] int id, [FromQuery] PaginationQuery paginationQuery)
         {
             var query = new GetTopicByIdWithPostsListQuery()
             {
-                Id = id
+                Id = id,
+                PageNumber = paginationQuery.PageNumber,
+                PageSize = paginationQuery.PageSize
+
             };
 
             var result = await _mediator.Send(query);
