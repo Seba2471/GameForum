@@ -15,13 +15,6 @@ namespace GameForum.Application.UnitTest.Mocks
 
             mockTopicRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(topics);
 
-            mockTopicRepository.Setup(repo => repo.GetTopicByIdWithPostsList(It.IsAny<int>())).ReturnsAsync(
-                (int id) =>
-                {
-                    var topic = GetTopicByIdWithPostsList(id);
-                    return topic;
-                });
-
             mockTopicRepository.Setup(repo => repo.AddAsync(It.IsAny<Topic>())).ReturnsAsync(
                 (Topic topic) =>
                 {
@@ -141,11 +134,20 @@ namespace GameForum.Application.UnitTest.Mocks
                 AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
             };
 
+            Post p4 = new Post()
+            {
+                PostId = 4,
+                Content = "Tylko sztylety",
+                TopicId = 1,
+                AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
+            };
+
             List<Post> posts = new List<Post>();
 
             posts.Add(p1);
             posts.Add(p2);
             posts.Add(p3);
+            posts.Add(p4);
 
             return posts;
         }
