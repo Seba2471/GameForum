@@ -36,7 +36,6 @@ namespace GameForum.Application.UnitTest.Topics.Commands
 
             var command = new CreatedTopicCommand()
             {
-
                 Title = new string('*', 10),
                 Content = new string('*', 30),
                 AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"

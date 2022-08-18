@@ -1,4 +1,7 @@
-﻿using GameForum.Application.Contracts.Persistence;
+﻿using AutoMapper;
+using GameForum.Application.Contracts.Persistence;
+using GameForum.Application.Models;
+using GameForum.Application.Models.Pagination;
 using GameForum.Domain.Entities;
 using Moq;
 
@@ -6,14 +9,25 @@ namespace GameForum.Application.UnitTest.Mocks
 {
     public class RepositoryMocks
     {
-
         public static Mock<ITopicRepository> GetTopicRepository()
         {
             var topics = GetTopics();
 
             var mockTopicRepository = new Mock<ITopicRepository>();
 
+
+
             mockTopicRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(topics);
+
+            mockTopicRepository.Setup(repo => repo.GetByIdWithAuthor(It.IsAny<int>())).ReturnsAsync(
+                (int id) =>
+                {
+                    var topic = topics.FirstOrDefault(t => t.TopicId == id);
+
+                    topic.Author = GetUsers().FirstOrDefault(u => u.Id == topic.AuthorId);
+
+                    return topic;
+                });
 
             mockTopicRepository.Setup(repo => repo.AddAsync(It.IsAny<Topic>())).ReturnsAsync(
                 (Topic topic) =>
@@ -38,6 +52,7 @@ namespace GameForum.Application.UnitTest.Mocks
                 TopicId = 1,
                 Title = "Pomoc z ekwipunkiem",
                 Content = "Proszę o pomoc z ekwipunkiem na 35 lvl",
+                AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
             };
 
             Topic t2 = new Topic()
@@ -45,6 +60,7 @@ namespace GameForum.Application.UnitTest.Mocks
                 TopicId = 2,
                 Title = "Pomoc z expowiskiem",
                 Content = "Gdzie moge wbijać poziom na 40 lvl ?",
+                AuthorId = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e"
             };
 
             List<Topic> topics = new List<Topic>();
@@ -54,21 +70,6 @@ namespace GameForum.Application.UnitTest.Mocks
 
             return topics;
         }
-
-        private static Topic GetTopicByIdWithPostsList(int id)
-        {
-            var posts = GetPosts();
-
-
-            var topics = GetTopics();
-
-            var topic = topics.FirstOrDefault(t => t.TopicId == id);
-
-            topic.Posts = posts.Where(p => p.TopicId == id).ToList();
-
-            return topic;
-        }
-
 
         public static Mock<IPostRepository> GetPostRepository()
         {
@@ -106,9 +107,45 @@ namespace GameForum.Application.UnitTest.Mocks
                     return posts.Any(p => p.PostId == id);
                 });
 
+            mockPostRepository.Setup(repo =>
+                repo.GetPageByTopicIdAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(
+                (int pageNumber, int pageSize, int id) =>
+                {
+                    var topicPosts = posts.Where(p => p.TopicId == id).ToList();
+
+                    var mapper = new AutoMapper.Mapper(new MapperConfiguration(cfg => cfg.CreateMap<PostDto, Post>().ReverseMap()));
+
+                    var postsFromDb = topicPosts
+                        .Skip(pageSize * (pageNumber - 1))
+                        .Take(pageSize)
+                        .ToList();
+
+                    var totalCount = topicPosts.Count();
+
+                    var items = mapper.Map<List<PostDto>>(postsFromDb);
+
+                    return new PaginationResponse<PostDto>(items, totalCount, pageSize, pageNumber);
+                });
+
 
             return mockPostRepository;
         }
+
+        private static List<ApplicationUser> GetUsers()
+        {
+            ApplicationUser user1 = new ApplicationUser()
+            {
+                Id = "5c59f198-a9aa-4a8e-af28-a93b1e62e37e",
+                UserName = "Typowy gracz"
+            };
+
+            List<ApplicationUser> users = new List<ApplicationUser>();
+
+            users.Add(user1);
+
+            return users;
+        }
+
 
         private static List<Post> GetPosts()
         {
