@@ -34,7 +34,7 @@ namespace GameForum.Api.Controllers
         }
 
         [HttpGet("{id}", Name = "GetTopicDetailWithPostList")]
-        public async Task<ActionResult<int>> GetTopicDetailWithPostsList([FromRoute] int id, [FromQuery] PaginationQuery paginationQuery)
+        public async Task<IActionResult> GetTopicDetailWithPostsList([FromRoute] int id, [FromQuery] PaginationQuery paginationQuery)
         {
             var query = new GetTopicByIdWithPostsListQuery()
             {
@@ -46,7 +46,8 @@ namespace GameForum.Api.Controllers
 
             var result = await _mediator.Send(query);
 
-            return Ok(result);
+            return result.Match<IActionResult>(success => Ok(success.Value),
+                notValid => BadRequest(notValid.ValidationErrors));
         }
 
         [HttpGet(Name = "GetTopicsList")]

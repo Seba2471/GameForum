@@ -5,7 +5,7 @@ namespace GameForum.Application.Responses
 {
     public class NotValidateResponse
     {
-        public Dictionary<string, string[]> ValidationErrors { get; set; }
+        public Dictionary<string, string[]> ValidationErrors { get; set; } = new Dictionary<string, string[]>();
         public NotValidateResponse(List<ValidationFailure> validationErrors)
         {
             ValidationErrors = validationErrors
@@ -19,6 +19,11 @@ namespace GameForum.Application.Responses
                         Values = errorMessages.Distinct().ToArray()
                     })
                 .ToDictionary(x => x.Key, x => x.Values);
+        }
+
+        public NotValidateResponse(string key, string value)
+        {
+            ValidationErrors.Add(key, new[] { value });
         }
     }
 }
