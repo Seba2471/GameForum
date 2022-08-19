@@ -3,7 +3,6 @@ using GameForum.Application.Functions.Posts.Commands.CreatePost;
 using GameForum.Application.Functions.Posts.Commands.UpdatePost;
 using GameForum.Application.Functions.Posts.Commands.UpdatePostContent;
 using GameForum.Application.Functions.Topics.Commands.CreateTopic;
-using GameForum.Application.Functions.Topics.Queries.GetTopicsList;
 using GameForum.Application.Models;
 using GameForum.Domain.Entities;
 

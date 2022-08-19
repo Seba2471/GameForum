@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using GameForum.Application.Contracts.Persistence;
-using GameForum.Application.Functions.Topics.Queries.GetTopicsList;
+using GameForum.Application.Models;
 using GameForum.Application.Models.Pagination;
 using GameForum.Domain.Entities;
 using Microsoft.EntityFrameworkCore;

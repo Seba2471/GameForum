@@ -53,9 +53,10 @@ namespace GameForum.Api.Controllers
         [HttpGet(Name = "GetTopicsList")]
         public async Task<IActionResult> GetTopicsList([FromQuery] GetTopicsListQuery getTopicsListQuery)
         {
-            var topics = await _mediator.Send(getTopicsListQuery);
+            var result = await _mediator.Send(getTopicsListQuery);
 
-            return Ok(topics);
+            return result.Match<IActionResult>(success => Ok(success.Value),
+                notValid => BadRequest(notValid.ValidationErrors));
         }
     }
 }

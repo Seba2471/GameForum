@@ -1,4 +1,4 @@
-﻿namespace GameForum.Application.Functions.Topics.Queries.GetTopicsList
+﻿namespace GameForum.Application.Models
 {
     public class TopicDto
     {
