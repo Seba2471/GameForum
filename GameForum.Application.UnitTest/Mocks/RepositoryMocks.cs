@@ -41,6 +41,24 @@ namespace GameForum.Application.UnitTest.Mocks
                 return topics.Any(topic => topic.TopicId == id);
             });
 
+            mockTopicRepository.Setup(repo => repo.GetPageAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(
+                (int pageNumber, int pageSize) =>
+            {
+
+                var mapper = new AutoMapper.Mapper(new MapperConfiguration(cfg => cfg.CreateMap<TopicDto, Topic>().ReverseMap()));
+
+                var topicsFromDb = topics
+                    .Skip(pageSize * (pageNumber - 1))
+                    .Take(pageSize)
+                    .ToList();
+
+                var totalCount = topics.Count();
+
+                var items = mapper.Map<List<TopicDto>>(topicsFromDb);
+
+                return new PaginationResponse<TopicDto>(items, totalCount, pageSize, pageNumber);
+            });
+
 
             return mockTopicRepository;
         }
